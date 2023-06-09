@@ -329,3 +329,18 @@ void A_MonsterProjectile (mobj_t *actor)
     // can be used to fire seeker missiles at will.
     mo->tracer = actor->target;
 }
+
+void A_WeaponSound(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+	if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+	if (!psp->state)
+		return;
+
+	if (psp->state->args[1])
+		// full volume
+		// [crispy] prevent from adding up volume
+		crispy->soundfull ? S_StartSoundOnce (NULL, psp->state->args[0]) : S_StartSound (NULL, psp->state->args[0]);
+	else
+		S_StartSound(player->so, psp->state->args[0]);
+}
