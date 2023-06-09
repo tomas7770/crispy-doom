@@ -1243,6 +1243,7 @@ typedef struct
     statenum_t nextstate;
     int misc1;
     int misc2;
+    int args[8];
 } state_t;
 
 extern state_t	states[NUMSTATES];
