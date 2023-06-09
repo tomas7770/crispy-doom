@@ -114,6 +114,8 @@ extern void A_Scratch();
 extern void A_PlaySound();
 extern void A_RandomJump();
 extern void A_LineEffect();
+// [custom] MBF21 code pointers
+extern void A_MonsterProjectile();
 
 typedef struct {
     const char *mnemonic;
@@ -210,6 +212,8 @@ static const bex_codeptr_t bex_codeptrtable[] = {
     {"PlaySound", {A_PlaySound}},
     {"RandomJump", {A_RandomJump}},
     {"LineEffect", {A_LineEffect}},
+    // [custom] MBF21 code pointers
+    {"MonsterProjectile", {A_MonsterProjectile}},
     {"NULL", {NULL}},
 };
 

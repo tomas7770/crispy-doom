@@ -16,6 +16,7 @@
 //
 // DESCRIPTION:
 //	[crispy] additional BOOM and MBF code pointers
+//	[custom] MBF21 code pointers
 //
 
 #include "p_local.h"
@@ -260,4 +261,71 @@ void A_FireOldBFG(mobj_t *mobj, player_t *player, pspdef_t *psp)
       P_CheckMissileSpawn(th);
     }
   while ((type != MT_PLASMA2) && (type = MT_PLASMA2)); //killough: obfuscated!
+}
+
+// [custom] MBF21 code pointers, adapted from dsda-doom
+
+inline static fixed_t AngleToSlope(int a)
+{
+	if (a > ANG90)
+		return finetangent[0];
+	else if (-a > ANG90)
+		return finetangent[FINEANGLES / 2 - 1];
+	else
+		return finetangent[(ANG90 - a) >> ANGLETOFINESHIFT];
+}
+
+inline static angle_t FixedToAngle(fixed_t a)
+{
+	return (angle_t)(((uint64_t)a * ANG1) >> FRACBITS);
+}
+
+// [XA] Ditto, using fixed-point-degrees input
+inline static fixed_t DegToSlope(fixed_t a)
+{
+	if (a >= 0)
+		return AngleToSlope(FixedToAngle(a));
+	else
+		return AngleToSlope(-(int)FixedToAngle(-a));
+}
+
+void A_MonsterProjectile (mobj_t *actor)
+{
+    int type, angle, pitch, spawnofs_xy, spawnofs_z;
+    mobj_t *mo;
+    int an;
+
+    if (!actor->target || !actor->state->args[0])
+        return;
+
+    type        = actor->state->args[0] - 1;
+    angle       = actor->state->args[1];
+    pitch       = actor->state->args[2];
+    spawnofs_xy = actor->state->args[3];
+    spawnofs_z  = actor->state->args[4];
+
+    A_FaceTarget(actor);
+    mo = P_SpawnMissile(actor, actor->target, type);
+    if (!mo)
+        return;
+
+    // adjust angle
+    mo->angle += (unsigned int)(((int64_t)angle << 16) / 360);
+    an = mo->angle >> ANGLETOFINESHIFT;
+    mo->momx = FixedMul(mo->info->speed, finecosine[an]);
+    mo->momy = FixedMul(mo->info->speed, finesine[an]);
+
+    // adjust pitch (approximated, using Doom's ye olde
+    // finetangent table; same method as monster aim)
+    mo->momz += FixedMul(mo->info->speed, DegToSlope(pitch));
+
+    // adjust position
+    an = (actor->angle - ANG90) >> ANGLETOFINESHIFT;
+    mo->x += FixedMul(spawnofs_xy, finecosine[an]);
+    mo->y += FixedMul(spawnofs_xy, finesine[an]);
+    mo->z += spawnofs_z;
+
+    // always set the 'tracer' field, so this pointer
+    // can be used to fire seeker missiles at will.
+    mo->tracer = actor->target;
 }
