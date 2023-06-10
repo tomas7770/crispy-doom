@@ -119,6 +119,8 @@ int deh_idkfa_armor_class = DEH_DEFAULT_IDKFA_ARMOR_CLASS;
 // See P_CheckAmmo and A_FireBFG in p_pspr.c
 
 int deh_bfg_cells_per_shot = DEH_DEFAULT_BFG_CELLS_PER_SHOT;
+// "BFG cells/shot" should have precedence over "Ammo per shot"
+int deh_bfg_cells_overridden = 0;
 
 // Dehacked: "Monsters infight"
 // This controls whether monsters can harm other monsters of the same 
@@ -192,6 +194,10 @@ static void DEH_MiscParseLine(deh_context_t *context, char *line, void *tag)
         }
         
         return;
+    }
+    else if (!strcasecmp(variable_name, "BFG Cells/Shot"))
+    {
+        deh_bfg_cells_overridden = 1;
     }
 
     for (i=0; i<arrlen(misc_settings); ++i)

@@ -50,6 +50,7 @@ extern int deh_idfa_armor_class;
 extern int deh_idkfa_armor;
 extern int deh_idkfa_armor_class;
 extern int deh_bfg_cells_per_shot;
+extern int deh_bfg_cells_overridden;
 extern int deh_species_infighting;
 
 #if 0

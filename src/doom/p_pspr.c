@@ -195,11 +195,9 @@ boolean P_CheckAmmo (player_t* player)
 
     // Minimal amount for one shot varies.
     if (player->readyweapon == wp_bfg)
-	count = deh_bfg_cells_per_shot;
-    else if (player->readyweapon == wp_supershotgun)
-	count = 2;	// Double barrel.
+    count = deh_bfg_cells_overridden ? deh_bfg_cells_per_shot : weaponinfo[wp_bfg].ammopershot;
     else
-	count = 1;	// Regular.
+	count = weaponinfo[player->readyweapon].ammopershot;
 
     // [crispy] force weapon switch if weapon not owned
     // only relevant when removing current weapon with TNTWEAPx cheat
@@ -219,29 +217,30 @@ boolean P_CheckAmmo (player_t* player)
     do
     {
 	if (player->weaponowned[wp_plasma]
-	    && player->ammo[am_cell]
+	    && player->ammo[am_cell]>weaponinfo[wp_plasma].ammopershot
 	    && (gamemode != shareware) )
 	{
 	    player->pendingweapon = wp_plasma;
 	}
 	else if (player->weaponowned[wp_supershotgun] 
-		 && player->ammo[am_shell]>2
+		 && player->ammo[am_shell]>weaponinfo[wp_supershotgun].ammopershot
 		 && (crispy->havessg) )
 	{
 	    player->pendingweapon = wp_supershotgun;
 	}
 	else if (player->weaponowned[wp_chaingun]
-		 && player->ammo[am_clip])
+		 && player->ammo[am_clip]>weaponinfo[wp_chaingun].ammopershot)
 	{
 	    player->pendingweapon = wp_chaingun;
 	}
 	else if (player->weaponowned[wp_shotgun]
-		 && player->ammo[am_shell])
+		 && player->ammo[am_shell]>weaponinfo[wp_shotgun].ammopershot)
 	{
 	    player->pendingweapon = wp_shotgun;
 	}
 	// [crispy] allow to remove the pistol via TNTWEAP2
-	else if (player->ammo[am_clip] && player->weaponowned[wp_pistol])
+	else if (player->ammo[am_clip]>weaponinfo[wp_pistol].ammopershot
+        && player->weaponowned[wp_pistol])
 	{
 	    player->pendingweapon = wp_pistol;
 	}
@@ -250,12 +249,13 @@ boolean P_CheckAmmo (player_t* player)
 	    player->pendingweapon = wp_chainsaw;
 	}
 	else if (player->weaponowned[wp_missile]
-		 && player->ammo[am_misl])
+		 && player->ammo[am_misl]>weaponinfo[wp_missile].ammopershot)
 	{
 	    player->pendingweapon = wp_missile;
 	}
 	else if (player->weaponowned[wp_bfg]
-		 && player->ammo[am_cell]>40
+        // crispy still keeps the hardcoded 40 cells here even when using "BFG cells/shot" dehacked field
+		 && player->ammo[am_cell]>(deh_bfg_cells_overridden ? 40 : weaponinfo[wp_bfg].ammopershot)
 		 && (gamemode != shareware) )
 	{
 	    player->pendingweapon = wp_bfg;
@@ -631,7 +631,7 @@ A_FireMissile
   pspdef_t*	psp ) 
 {
     if (!player) return; // [crispy] let pspr action pointers get called from mobj states
-    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, 1);
+    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, weaponinfo[wp_missile].ammopershot);
     P_SpawnPlayerMissile (player->mo, MT_ROCKET);
 }
 
@@ -647,7 +647,7 @@ A_FireBFG
 {
     if (!player) return; // [crispy] let pspr action pointers get called from mobj states
     DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, 
-                 deh_bfg_cells_per_shot);
+                 deh_bfg_cells_overridden ? deh_bfg_cells_per_shot : weaponinfo[wp_bfg].ammopershot);
     P_SpawnPlayerMissile (player->mo, MT_BFG);
 }
 
@@ -663,7 +663,7 @@ A_FirePlasma
   pspdef_t*	psp ) 
 {
     if (!player) return; // [crispy] let pspr action pointers get called from mobj states
-    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, 1);
+    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, weaponinfo[wp_plasma].ammopershot);
 
     P_SetPsprite (player,
 		  ps_flash,
@@ -748,7 +748,7 @@ A_FirePistol
     S_StartSound (player->so, sfx_pistol); // [crispy] weapon sound source
 
     P_SetMobjState (player->mo, S_PLAY_ATK2);
-    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, 1);
+    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, weaponinfo[wp_pistol].ammopershot);
 
     P_SetPsprite (player,
 		  ps_flash,
@@ -776,7 +776,7 @@ A_FireShotgun
     S_StartSound (player->so, sfx_shotgn); // [crispy] weapon sound source
     P_SetMobjState (player->mo, S_PLAY_ATK2);
 
-    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, 1);
+    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, weaponinfo[wp_shotgun].ammopershot);
 
     P_SetPsprite (player,
 		  ps_flash,
@@ -810,7 +810,7 @@ A_FireShotgun2
     S_StartSound (player->so, sfx_dshtgn); // [crispy] weapon sound source
     P_SetMobjState (player->mo, S_PLAY_ATK2);
 
-    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, 2);
+    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, weaponinfo[wp_supershotgun].ammopershot);
 
     P_SetPsprite (player,
 		  ps_flash,
@@ -845,11 +845,11 @@ A_FireCGun
     if (!player) return; // [crispy] let pspr action pointers get called from mobj states
     S_StartSound (player->so, sfx_pistol); // [crispy] weapon sound source
 
-    if (!player->ammo[weaponinfo[player->readyweapon].ammo])
+    if (player->ammo[weaponinfo[player->readyweapon].ammo] < weaponinfo[wp_chaingun].ammopershot)
 	return;
 		
     P_SetMobjState (player->mo, S_PLAY_ATK2);
-    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, 1);
+    DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, weaponinfo[wp_chaingun].ammopershot);
 
     P_SetPsprite (player,
 		  ps_flash,

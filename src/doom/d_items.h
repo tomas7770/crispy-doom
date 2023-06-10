@@ -33,6 +33,7 @@ typedef struct
     int		readystate;
     int		atkstate;
     int		flashstate;
+    int     ammopershot;
 
 } weaponinfo_t;
 
