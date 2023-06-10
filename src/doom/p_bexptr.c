@@ -344,3 +344,29 @@ void A_WeaponSound(mobj_t *mobj, player_t *player, pspdef_t *psp)
 	else
 		S_StartSound(player->so, psp->state->args[0]);
 }
+
+void A_ConsumeAmmo(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+  int amount;
+  ammotype_t ammonum;
+
+  if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+  ammonum = weaponinfo[player->readyweapon].ammo;
+  if (!psp->state || ammonum == am_noammo)
+    return;
+
+  // use the weapon's ammo-per-shot amount if zero.
+  // to subtract zero ammo, don't call this function. ;)
+  if (psp->state->args[0] != 0)
+    amount = psp->state->args[0];
+  else
+    amount = weaponinfo[player->readyweapon].ammopershot;
+
+  player->ammo[ammonum] -= amount;
+  // [crispy] never allow less than zero ammo
+  if (player->ammo[ammonum] < 0)
+  {
+    player->ammo[ammonum] = 0;
+  }
+}
