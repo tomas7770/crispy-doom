@@ -25,6 +25,7 @@
 
 extern void A_Explode();
 extern void A_FaceTarget();
+extern void P_BulletSlope();
 
 extern boolean P_CheckMeleeRange (mobj_t *actor);
 extern void P_Thrust (player_t* player, angle_t angle, fixed_t move);
@@ -289,6 +290,21 @@ inline static fixed_t DegToSlope(fixed_t a)
 		return AngleToSlope(-(int)FixedToAngle(-a));
 }
 
+angle_t P_RandomHitscanAngle(fixed_t spread)
+{
+  int64_t spread_bam;
+
+  // FixedToAngle doesn't work for negative numbers,
+  // so for convenience take just the absolute value.
+  spread_bam = (spread < 0 ? FixedToAngle(-spread) : FixedToAngle(spread));
+  return (angle_t)((spread_bam * P_SubRandom()) / 255);
+}
+
+fixed_t P_RandomHitscanSlope(fixed_t spread)
+{
+  return AngleToSlope(P_RandomHitscanAngle(spread));
+}
+
 void A_MonsterProjectile (mobj_t *actor)
 {
     int type, angle, pitch, spawnofs_xy, spawnofs_z;
@@ -328,6 +344,34 @@ void A_MonsterProjectile (mobj_t *actor)
     // always set the 'tracer' field, so this pointer
     // can be used to fire seeker missiles at will.
     mo->tracer = actor->target;
+}
+
+void A_WeaponBulletAttack(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+  int hspread, vspread, numbullets, damagebase, damagemod;
+  int i, damage, angle, slope;
+
+  if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+  if (!psp->state)
+		return;
+
+  hspread    = psp->state->args[0];
+  vspread    = psp->state->args[1];
+  numbullets = psp->state->args[2];
+  damagebase = psp->state->args[3];
+  damagemod  = psp->state->args[4];
+
+  P_BulletSlope(player->mo);
+
+  for (i = 0; i < numbullets; i++)
+  {
+    damage = (P_Random() % damagemod + 1) * damagebase;
+    angle = player->mo->angle + P_RandomHitscanAngle(hspread);
+    slope = bulletslope + P_RandomHitscanSlope(vspread);
+
+    P_LineAttack(player->mo, angle, MISSILERANGE, slope, damage);
+  }
 }
 
 void A_WeaponSound(mobj_t *mobj, player_t *player, pspdef_t *psp)
