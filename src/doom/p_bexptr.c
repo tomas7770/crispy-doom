@@ -473,3 +473,16 @@ void A_RefireTo(mobj_t *mobj, player_t *player, pspdef_t *psp)
   &&  (player->pendingweapon == wp_nochange && player->health))
     P_SetPsprite(player, ps_weapon, psp->state->args[0]);
 }
+
+void A_GunFlashTo(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+  if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+  if (!psp->state)
+    return;
+
+  if(!psp->state->args[1])
+    P_SetMobjState(player->mo, S_PLAY_ATK2);
+
+  P_SetPsprite(player, ps_flash, psp->state->args[0]);
+}

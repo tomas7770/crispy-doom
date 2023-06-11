@@ -121,6 +121,7 @@ extern void A_WeaponBulletAttack();
 extern void A_WeaponSound();
 extern void A_ConsumeAmmo();
 extern void A_RefireTo();
+extern void A_GunFlashTo();
 
 typedef struct {
     const char *mnemonic;
@@ -225,6 +226,7 @@ static const bex_codeptr_t bex_codeptrtable[] = {
     {"WeaponSound", {A_WeaponSound}},
     {"ConsumeAmmo", {A_ConsumeAmmo}},
     {"RefireTo", {A_RefireTo}},
+    {"GunFlashTo", {A_GunFlashTo}},
     {"NULL", {NULL}},
 };
 
