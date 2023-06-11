@@ -308,6 +308,62 @@ fixed_t P_RandomHitscanSlope(fixed_t spread)
   return AngleToSlope(P_RandomHitscanAngle(spread));
 }
 
+void A_SpawnObject(mobj_t *actor)
+{
+  int type, angle, ofs_x, ofs_y, ofs_z, vel_x, vel_y, vel_z;
+  angle_t an;
+  int fan, dx, dy;
+  mobj_t *mo;
+
+  if (!actor->state->args[0])
+    return;
+
+  type  = actor->state->args[0] - 1;
+  angle = actor->state->args[1];
+  ofs_x = actor->state->args[2];
+  ofs_y = actor->state->args[3];
+  ofs_z = actor->state->args[4];
+  vel_x = actor->state->args[5];
+  vel_y = actor->state->args[6];
+  vel_z = actor->state->args[7];
+
+  // calculate position offsets
+  an = actor->angle + (unsigned int)(((int64_t)angle << 16) / 360);
+  fan = an >> ANGLETOFINESHIFT;
+  dx = FixedMul(ofs_x, finecosine[fan]) - FixedMul(ofs_y, finesine[fan]  );
+  dy = FixedMul(ofs_x, finesine[fan]  ) + FixedMul(ofs_y, finecosine[fan]);
+
+  // spawn it, yo
+  mo = P_SpawnMobj(actor->x + dx, actor->y + dy, actor->z + ofs_z, type);
+  if (!mo)
+    return;
+
+  // angle dangle
+  mo->angle = an;
+
+  // set velocity
+  mo->momx = FixedMul(vel_x, finecosine[fan]) - FixedMul(vel_y, finesine[fan]  );
+  mo->momy = FixedMul(vel_x, finesine[fan]  ) + FixedMul(vel_y, finecosine[fan]);
+  mo->momz = vel_z;
+
+  // if spawned object is a missile, set target+tracer
+  if (mo->info->flags & (MF_MISSILE | MF_BOUNCES))
+  {
+    // if spawner is also a missile, copy 'em
+    if (actor->info->flags & (MF_MISSILE | MF_BOUNCES))
+    {
+      mo->target = actor->target;
+      mo->tracer = actor->tracer;
+    }
+    // otherwise, set 'em as if a monster fired 'em
+    else
+    {
+      mo->target = actor;
+      mo->tracer = actor->target;
+    }
+  }
+}
+
 void A_MonsterProjectile (mobj_t *actor)
 {
     int type, angle, pitch, spawnofs_xy, spawnofs_z;
