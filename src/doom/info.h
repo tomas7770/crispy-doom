@@ -21,6 +21,8 @@
 #ifndef __INFO__
 #define __INFO__
 
+#include <inttypes.h>
+
 // Needed for action function pointer handling.
 #include "d_think.h"
 
@@ -1244,6 +1246,7 @@ typedef struct
     int misc1;
     int misc2;
     int args[8];
+    int8_t defined_codeptr_args;
 } state_t;
 
 extern state_t	states[NUMSTATES];

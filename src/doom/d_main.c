@@ -134,6 +134,7 @@ int             show_diskicon = 1;
 void D_ConnectNetGame(void);
 void D_CheckNetGame(void);
 
+extern void InitMBF21Defaults();
 
 //
 // D_ProcessEvents
@@ -2055,6 +2056,9 @@ void D_DoomMain (void)
     // Set the gamedescription string. This is only possible now that
     // we've finished loading Dehacked patches.
     D_SetGameDescription();
+
+    // [custom] set MBF21 default args for unset args
+    InitMBF21Defaults();
 
     savegamedir = M_GetSaveGameDir(D_SaveGameIWADName(gamemission, gamevariant));
 

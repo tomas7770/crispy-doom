@@ -135,6 +135,41 @@ static void DEH_FrameParseLine(deh_context_t *context, char *line, void *tag)
     // all values are integers
 
     ivalue = atoi(value);
+
+    // [custom] mark defined MBF21 args
+    // sorry for the mess, it was the easiest way
+    if (!strcasecmp(variable_name, "Args1"))
+    {
+        state->defined_codeptr_args |= (1 << 0);
+    }
+    else if (!strcasecmp(variable_name, "Args2"))
+    {
+        state->defined_codeptr_args |= (1 << 1);
+    }
+    else if (!strcasecmp(variable_name, "Args3"))
+    {
+        state->defined_codeptr_args |= (1 << 2);
+    }
+    else if (!strcasecmp(variable_name, "Args4"))
+    {
+        state->defined_codeptr_args |= (1 << 3);
+    }
+    else if (!strcasecmp(variable_name, "Args5"))
+    {
+        state->defined_codeptr_args |= (1 << 4);
+    }
+    else if (!strcasecmp(variable_name, "Args6"))
+    {
+        state->defined_codeptr_args |= (1 << 5);
+    }
+    else if (!strcasecmp(variable_name, "Args7"))
+    {
+        state->defined_codeptr_args |= (1 << 6);
+    }
+    else if (!strcasecmp(variable_name, "Args8"))
+    {
+        state->defined_codeptr_args |= (1 << 7);
+    }
     
     // [crispy] drop the overflow simulation into the frame table
     if (state == &states[NUMSTATES - 1] && false)

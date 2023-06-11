@@ -122,6 +122,7 @@ extern void A_ConsumeAmmo();
 typedef struct {
     const char *mnemonic;
     const actionf_t pointer;
+    int default_args[8];
 } bex_codeptr_t;
 
 static const bex_codeptr_t bex_codeptrtable[] = {
@@ -275,6 +276,33 @@ static void DEH_BEXPtrParseLine(deh_context_t *context, char *line, void *tag)
     }
 
     DEH_Warning(context, "Invalid mnemonic '%s'", value);
+}
+
+// [custom] set MBF21 default args for unset args
+void InitMBF21Defaults() {
+    int i, j;
+    const bex_codeptr_t *bexptr_match;
+    const actionf_v null_action = {NULL};
+
+    for (i = 0; i < NUMSTATES; i++) {
+        bexptr_match = NULL;
+
+        // Here we go, commit war crimes to compare unions of pointers...
+        for (j = 0; bex_codeptrtable[j].pointer.acv != null_action; j++) {
+            if (states[i].action.acv == bex_codeptrtable[j].pointer.acv) {
+                bexptr_match = &bex_codeptrtable[j];
+                break;
+            }
+        }
+
+        if (!bexptr_match)
+            continue;
+
+        for (j = 0; j < 8; j++) {
+            if (!(states[i].defined_codeptr_args & (1 << j)))
+                states[i].args[j] = bexptr_match->default_args[j];
+        }
+    }
 }
 
 deh_section_t deh_section_bexptr =
