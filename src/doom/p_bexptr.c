@@ -29,6 +29,7 @@ extern void A_FaceTarget();
 extern void P_BulletSlope();
 extern boolean P_CheckAmmo();
 extern void P_SetPsprite (player_t *player, int position, statenum_t stnum);
+extern void P_RadiusAttackCustomDist();
 
 extern boolean P_CheckMeleeRange (mobj_t *actor);
 extern void P_Thrust (player_t* player, angle_t angle, fixed_t move);
@@ -403,6 +404,14 @@ void A_MonsterProjectile (mobj_t *actor)
     // always set the 'tracer' field, so this pointer
     // can be used to fire seeker missiles at will.
     mo->tracer = actor->target;
+}
+
+void A_RadiusDamage(mobj_t *actor)
+{
+  if (!actor->state)
+    return;
+
+  P_RadiusAttackCustomDist(actor, actor->target, actor->state->args[0], actor->state->args[1]);
 }
 
 void A_WeaponProjectile(mobj_t *mobj, player_t *player, pspdef_t *psp)

@@ -1409,7 +1409,21 @@ void P_UseLines (player_t*	player)
 mobj_t*		bombsource;
 mobj_t*		bombspot;
 int		bombdamage;
+int		bombdistance;
 
+int P_SplashDamage(fixed_t dist)
+{
+  int damage;
+
+  // [XA] independent damage/distance calculation.
+  //      same formula as eternity; thanks Quas :P
+  if (bombdamage == bombdistance)
+    damage = bombdamage - dist;
+  else
+    damage = (bombdamage * (bombdistance - dist) / bombdistance) + 1;
+
+  return damage;
+}
 
 //
 // PIT_RadiusAttack
@@ -1440,13 +1454,13 @@ boolean PIT_RadiusAttack (mobj_t* thing)
     if (dist < 0)
 	dist = 0;
 
-    if (dist >= bombdamage)
+    if (dist >= bombdistance)
 	return true;	// out of range
 
     if ( P_CheckSight (thing, bombspot) )
     {
 	// must be in direct path
-	P_DamageMobj (thing, bombspot, bombsource, bombdamage - dist);
+	P_DamageMobj (thing, bombspot, bombsource, P_SplashDamage(dist));
     }
     
     return true;
@@ -1457,11 +1471,7 @@ boolean PIT_RadiusAttack (mobj_t* thing)
 // P_RadiusAttack
 // Source is the creature that caused the explosion at spot.
 //
-void
-P_RadiusAttack
-( mobj_t*	spot,
-  mobj_t*	source,
-  int		damage )
+void P_RadiusAttackCustomDist (mobj_t* spot, mobj_t* source, int damage, int distance)
 {
     int		x;
     int		y;
@@ -1481,10 +1491,20 @@ P_RadiusAttack
     bombspot = spot;
     bombsource = source;
     bombdamage = damage;
+    bombdistance = distance;
 	
     for (y=yl ; y<=yh ; y++)
 	for (x=xl ; x<=xh ; x++)
 	    P_BlockThingsIterator (x, y, PIT_RadiusAttack );
+}
+
+void
+P_RadiusAttack
+( mobj_t*	spot,
+  mobj_t*	source,
+  int		damage )
+{
+    P_RadiusAttackCustomDist(spot, source, damage, damage);
 }
 
 
