@@ -476,6 +476,52 @@ void A_WeaponBulletAttack(mobj_t *mobj, player_t *player, pspdef_t *psp)
   }
 }
 
+void A_WeaponMeleeAttack(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+  int damagebase, damagemod, zerkfactor, hitsound, range;
+  angle_t angle;
+  int slope, damage;
+
+  if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+  if (!psp->state)
+    return;
+
+  damagebase = psp->state->args[0];
+  damagemod  = psp->state->args[1];
+  zerkfactor = psp->state->args[2];
+  hitsound   = psp->state->args[3];
+  range      = psp->state->args[4];
+
+  if (range == 0)
+    range = MELEERANGE;
+
+  damage = (P_Random() % damagemod + 1) * damagebase;
+  if (player->powers[pw_strength])
+    damage = (damage * zerkfactor) >> FRACBITS;
+
+  // slight randomization; weird vanillaism here. :P
+  angle = player->mo->angle;
+
+  angle += P_SubRandom()<<18;
+
+  // autoaim
+  slope = P_AimLineAttack(player->mo, angle, range);
+
+  // attack, dammit!
+  P_LineAttack(player->mo, angle, range, slope, damage);
+
+  // missed? ah, welp.
+  if (!linetarget)
+    return;
+
+  // un-missed!
+  S_StartSound(player->so, hitsound);
+
+  // turn to face target
+  player->mo->angle = R_PointToAngle2(player->mo->x, player->mo->y, linetarget->x, linetarget->y);
+}
+
 void A_WeaponSound(mobj_t *mobj, player_t *player, pspdef_t *psp)
 {
 	if (!player) return; // [crispy] let pspr action pointers get called from mobj states
