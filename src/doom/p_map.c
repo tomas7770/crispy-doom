@@ -1483,7 +1483,7 @@ void P_RadiusAttackCustomDist (mobj_t* spot, mobj_t* source, int damage, int dis
     
     fixed_t	dist;
 	
-    dist = (damage+MAXRADIUS)<<FRACBITS;
+    dist = (distance+MAXRADIUS)<<FRACBITS;
     yh = (spot->y + dist - bmaporgy)>>MAPBLOCKSHIFT;
     yl = (spot->y - dist - bmaporgy)>>MAPBLOCKSHIFT;
     xh = (spot->x + dist - bmaporgx)>>MAPBLOCKSHIFT;
