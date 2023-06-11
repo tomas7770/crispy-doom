@@ -44,7 +44,7 @@ weaponinfo_t	weaponinfo[NUMWEAPONS] =
 	S_PUNCH,
 	S_PUNCH1,
 	S_NULL,
-	0,
+	1,
     },	
     {
 	// pistol
@@ -114,7 +114,7 @@ weaponinfo_t	weaponinfo[NUMWEAPONS] =
 	S_SAW,
 	S_SAW1,
 	S_NULL,
-	0,
+	1,
     },
     {
 	// super shotgun
