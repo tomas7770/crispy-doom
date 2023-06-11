@@ -1262,7 +1262,7 @@ P_SpawnMissile
 // P_SpawnPlayerMissile
 // Tries to aim at a nearby monster
 //
-void
+mobj_t*
 P_SpawnPlayerMissile
 ( mobj_t*	source,
   mobjtype_t	type )
@@ -1331,5 +1331,7 @@ P_SpawnPlayerMissile
     P_CheckMissileSpawn (th);
 
     A_Recoil (source->player);
+
+    return th;
 }
 

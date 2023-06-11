@@ -346,6 +346,49 @@ void A_MonsterProjectile (mobj_t *actor)
     mo->tracer = actor->target;
 }
 
+void A_WeaponProjectile(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+  int type, angle, pitch, spawnofs_xy, spawnofs_z;
+  mobj_t *mo;
+  int an;
+
+  if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+  if (!psp->state || !psp->state->args[0])
+    return;
+
+  type        = psp->state->args[0] - 1;
+  angle       = psp->state->args[1];
+  pitch       = psp->state->args[2];
+  spawnofs_xy = psp->state->args[3];
+  spawnofs_z  = psp->state->args[4];
+
+  mo = P_SpawnPlayerMissile(player->mo, type);
+  if (!mo)
+    return;
+
+  // adjust angle
+  mo->angle += (unsigned int)(((int64_t)angle << 16) / 360);
+  an = mo->angle >> ANGLETOFINESHIFT;
+  mo->momx = FixedMul(mo->info->speed, finecosine[an]);
+  mo->momy = FixedMul(mo->info->speed, finesine[an]);
+
+  // adjust pitch (approximated, using Doom's ye olde
+  // finetangent table; same method as autoaim)
+  mo->momz += FixedMul(mo->info->speed, DegToSlope(pitch));
+
+  // adjust position
+  an = (player->mo->angle - ANG90) >> ANGLETOFINESHIFT;
+  mo->x += FixedMul(spawnofs_xy, finecosine[an]);
+  mo->y += FixedMul(spawnofs_xy, finesine[an]);
+  mo->z += spawnofs_z;
+
+  // set tracer to the player's autoaim target,
+  // so player seeker missiles prioritizing the
+  // baddie the player is actually aiming at. ;)
+  mo->tracer = linetarget;
+}
+
 void A_WeaponBulletAttack(mobj_t *mobj, player_t *player, pspdef_t *psp)
 {
   int hspread, vspread, numbullets, damagebase, damagemod;
