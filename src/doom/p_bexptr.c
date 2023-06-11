@@ -22,10 +22,13 @@
 #include "p_local.h"
 #include "m_random.h"
 #include "s_sound.h"
+#include "d_event.h"
 
 extern void A_Explode();
 extern void A_FaceTarget();
 extern void P_BulletSlope();
+extern boolean P_CheckAmmo();
+extern void P_SetPsprite (player_t *player, int position, statenum_t stnum);
 
 extern boolean P_CheckMeleeRange (mobj_t *actor);
 extern void P_Thrust (player_t* player, angle_t angle, fixed_t move);
@@ -147,7 +150,7 @@ void A_RandomJump(mobj_t *mo, player_t *player, pspdef_t *psp)
 	{
 		if (Crispy_Random() < psp->state->misc2)
 		{
-			extern void P_SetPsprite (player_t *player, int position, statenum_t stnum);
+			// extern void P_SetPsprite (player_t *player, int position, statenum_t stnum);
 
 			P_SetPsprite(player, psp - &player->psprites[0], psp->state->misc1);
 		}
@@ -456,4 +459,17 @@ void A_ConsumeAmmo(mobj_t *mobj, player_t *player, pspdef_t *psp)
   {
     player->ammo[ammonum] = 0;
   }
+}
+
+void A_RefireTo(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+  if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+  if (!psp->state)
+    return;
+
+  if ((psp->state->args[1] || P_CheckAmmo(player))
+  &&  (player->cmd.buttons & BT_ATTACK)
+  &&  (player->pendingweapon == wp_nochange && player->health))
+    P_SetPsprite(player, ps_weapon, psp->state->args[0]);
 }
