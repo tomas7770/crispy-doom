@@ -205,6 +205,12 @@ typedef enum
 
 } mobjflag_t;
 
+// [custom] MBF21 flags
+typedef enum
+{
+    // Thing causes splash damage even if the target shouldn't
+    MF2_FORCERADIUSDMG = 0x00010,
+} mobjflag21_t;
 
 // Map Object definition.
 typedef struct mobj_s

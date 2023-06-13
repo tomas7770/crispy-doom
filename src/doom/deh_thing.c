@@ -74,6 +74,7 @@ static const bex_thingbits_t bex_thingbitstable[] = {
 };
 
 static const bex_thingbits_t bex_thingbits21table[] = {
+    {"FORCERADIUSDMG", MF2_FORCERADIUSDMG},
 };
 
 DEH_BEGIN_MAPPING(thing_mapping, mobjinfo_t)
