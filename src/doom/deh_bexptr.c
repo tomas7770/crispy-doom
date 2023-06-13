@@ -123,6 +123,8 @@ extern void A_RadiusDamage();
 extern void A_SeekTracer();
 extern void A_FindTracer();
 extern void A_JumpIfTracerInSight();
+extern void A_AddFlags();
+extern void A_RemoveFlags();
 extern void A_WeaponProjectile();
 extern void A_WeaponBulletAttack();
 extern void A_WeaponMeleeAttack();
@@ -235,6 +237,8 @@ static const bex_codeptr_t bex_codeptrtable[] = {
     {"SeekTracer", {A_SeekTracer}},
     {"FindTracer", {A_FindTracer}, {0, 10}},
     {"JumpIfTracerInSight", {A_JumpIfTracerInSight}},
+    {"AddFlags", {A_AddFlags}},
+    {"RemoveFlags", {A_RemoveFlags}},
     {"WeaponProjectile", {A_WeaponProjectile}},
     {"WeaponBulletAttack", {A_WeaponBulletAttack}, {0, 0, 1, 5, 3}},
     {"WeaponMeleeAttack", {A_WeaponMeleeAttack}, {2, 10, FRACUNIT, 0, 0}},

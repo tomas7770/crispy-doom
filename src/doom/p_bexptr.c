@@ -460,6 +460,34 @@ void A_JumpIfTracerInSight(mobj_t* actor)
     P_SetMobjState(actor, state);
 }
 
+void A_AddFlags(mobj_t* actor)
+{
+  int flags, flags2;
+
+  if (!actor)
+    return;
+
+  flags  = actor->state->args[0];
+  flags2 = actor->state->args[1];
+
+  actor->flags  |= flags;
+  actor->flags21 |= flags2;
+}
+
+void A_RemoveFlags(mobj_t* actor)
+{
+  int flags, flags2;
+
+  if (!actor)
+    return;
+
+  flags  = actor->state->args[0];
+  flags2 = actor->state->args[1];
+
+  actor->flags  &= ~flags;
+  actor->flags21 &= ~flags2;
+}
+
 void A_WeaponProjectile(mobj_t *mobj, player_t *player, pspdef_t *psp)
 {
   int type, angle, pitch, spawnofs_xy, spawnofs_z;
