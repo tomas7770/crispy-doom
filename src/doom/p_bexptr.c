@@ -414,6 +414,20 @@ void A_RadiusDamage(mobj_t *actor)
   P_RadiusAttackCustomDist(actor, actor->target, actor->state->args[0], actor->state->args[1]);
 }
 
+void A_FindTracer(mobj_t *actor)
+{
+  angle_t fov;
+  int dist;
+
+  if (!actor || actor->tracer)
+    return;
+
+  fov  = FixedToAngle(actor->state->args[0]);
+  dist =             (actor->state->args[1]);
+
+  actor->tracer = P_RoughTargetSearch(actor, fov, dist);
+}
+
 void A_WeaponProjectile(mobj_t *mobj, player_t *player, pspdef_t *psp)
 {
   int type, angle, pitch, spawnofs_xy, spawnofs_z;

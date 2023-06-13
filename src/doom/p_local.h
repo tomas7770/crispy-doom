@@ -200,6 +200,8 @@ P_PathTraverse
 void P_UnsetThingPosition (mobj_t* thing);
 void P_SetThingPosition (mobj_t* thing);
 
+mobj_t *P_RoughTargetSearch(mobj_t *mo, angle_t fov, int distance);
+
 
 //
 // P_MAP
@@ -233,6 +235,7 @@ boolean P_TryMove (mobj_t* thing, fixed_t x, fixed_t y);
 boolean P_TeleportMove (mobj_t* thing, fixed_t x, fixed_t y);
 void	P_SlideMove (mobj_t* mo);
 boolean P_CheckSight (mobj_t* t1, mobj_t* t2);
+boolean P_CheckFov(mobj_t *t1, mobj_t *t2, angle_t fov);
 void 	P_UseLines (player_t* player);
 
 boolean P_ChangeSector (sector_t* sector, boolean crunch);
