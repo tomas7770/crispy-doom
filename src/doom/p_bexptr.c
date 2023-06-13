@@ -441,6 +441,25 @@ void A_FindTracer(mobj_t *actor)
   actor->tracer = P_RoughTargetSearch(actor, fov, dist);
 }
 
+void A_JumpIfTracerInSight(mobj_t* actor)
+{
+  angle_t fov;
+  int state;
+
+  if (!actor || !actor->tracer)
+    return;
+
+  state =             (actor->state->args[0]);
+  fov   = FixedToAngle(actor->state->args[1]);
+
+  // Check FOV first since it's faster
+  if (fov > 0 && !P_CheckFov(actor, actor->tracer, fov))
+    return;
+
+  if (P_CheckSight(actor, actor->tracer))
+    P_SetMobjState(actor, state);
+}
+
 void A_WeaponProjectile(mobj_t *mobj, player_t *player, pspdef_t *psp)
 {
   int type, angle, pitch, spawnofs_xy, spawnofs_z;
