@@ -296,6 +296,9 @@ typedef struct mobj_s
     fixed_t		oldz;
     angle_t		oldangle;
 
+    // [custom] MBF21 flags
+    int flags21;
+
 } mobj_t;
 
 

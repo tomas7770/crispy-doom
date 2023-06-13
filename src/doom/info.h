@@ -1463,6 +1463,8 @@ typedef struct
     int minmissilechance;
     // [crispy] multiplier for likelihood of a missile attack (generaliz. for various)
     int missilechancemult;
+    // [custom] MBF21 flags
+    int flags21;
 
 } mobjinfo_t;
 

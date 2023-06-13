@@ -662,6 +662,8 @@ P_SpawnMobjSafe
     mobj->radius = info->radius;
     mobj->height = info->height;
     mobj->flags = info->flags;
+    // [custom] MBF21 flags
+    mobj->flags21 = info->flags21;
     mobj->health = info->spawnhealth;
 
     if (gameskill != sk_nightmare)
