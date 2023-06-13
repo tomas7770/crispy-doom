@@ -73,6 +73,9 @@ static const bex_thingbits_t bex_thingbitstable[] = {
     {"UNUSED4", 0x40000000},
 };
 
+static const bex_thingbits_t bex_thingbits21table[] = {
+};
+
 DEH_BEGIN_MAPPING(thing_mapping, mobjinfo_t)
   DEH_MAPPING("ID #",                doomednum)
   DEH_MAPPING("Initial frame",       spawnstate)
@@ -233,6 +236,22 @@ static void DEH_ThingParseLine(deh_context_t *context, char *line, void *tag)
 		}
 	}
     }
+
+    // [custom] support MBF21 bits mnemonics in Things fields
+    if (!ivalue && !strcasecmp(variable_name, "mbf21 bits"))
+    {
+	for ( ; (value = strtok(value, ",+| \t\f\r")); value = NULL)
+	{
+	    int i;
+	    for (i = 0; i < arrlen(bex_thingbits21table); i++)
+		if (!strcasecmp(value, bex_thingbits21table[i].flag))
+		{
+		    ivalue |= bex_thingbits21table[i].bits;
+		    break;
+		}
+	}
+    }
+
     // [crispy] Thing ids in dehacked are 1-based, convert dropped item to 0-based
     if (!strcasecmp(variable_name, "dropped item"))
     {
