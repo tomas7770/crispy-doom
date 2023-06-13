@@ -414,6 +414,19 @@ void A_RadiusDamage(mobj_t *actor)
   P_RadiusAttackCustomDist(actor, actor->target, actor->state->args[0], actor->state->args[1]);
 }
 
+void A_SeekTracer(mobj_t *actor)
+{
+  angle_t threshold, maxturnangle;
+
+  if (!actor)
+    return;
+
+  threshold    = FixedToAngle(actor->state->args[0]);
+  maxturnangle = FixedToAngle(actor->state->args[1]);
+
+  P_SeekerMissile(actor, &actor->tracer, threshold, maxturnangle, true);
+}
+
 void A_FindTracer(mobj_t *actor)
 {
   angle_t fov;

@@ -120,6 +120,7 @@ extern void A_LineEffect();
 extern void A_SpawnObject();
 extern void A_MonsterProjectile();
 extern void A_RadiusDamage();
+extern void A_SeekTracer();
 extern void A_FindTracer();
 extern void A_WeaponProjectile();
 extern void A_WeaponBulletAttack();
@@ -230,6 +231,7 @@ static const bex_codeptr_t bex_codeptrtable[] = {
     {"SpawnObject", {A_SpawnObject}},
     {"MonsterProjectile", {A_MonsterProjectile}},
     {"RadiusDamage", {A_RadiusDamage}},
+    {"SeekTracer", {A_SeekTracer}},
     {"FindTracer", {A_FindTracer}, {0, 10}},
     {"WeaponProjectile", {A_WeaponProjectile}},
     {"WeaponBulletAttack", {A_WeaponBulletAttack}, {0, 0, 1, 5, 3}},

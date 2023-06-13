@@ -1335,3 +1335,99 @@ P_SpawnPlayerMissile
     return th;
 }
 
+// Returns 1 if 'source' needs to turn clockwise, or 0 if 'source' needs
+// to turn counter clockwise.  'delta' is set to the amount 'source'
+// needs to turn.
+static int P_FaceMobj(mobj_t * source, mobj_t * target, angle_t * delta)
+{
+    angle_t diff;
+    angle_t angle1;
+    angle_t angle2;
+
+    angle1 = source->angle;
+    angle2 = R_PointToAngle2(source->x, source->y, target->x, target->y);
+    if (angle2 > angle1)
+    {
+        diff = angle2 - angle1;
+        if (diff > ANG180)
+        {
+            *delta = ANG_MAX - diff;
+            return (0);
+        }
+        else
+        {
+            *delta = diff;
+            return (1);
+        }
+    }
+    else
+    {
+        diff = angle1 - angle2;
+        if (diff > ANG180)
+        {
+            *delta = ANG_MAX - diff;
+            return (1);
+        }
+        else
+        {
+            *delta = diff;
+            return (0);
+        }
+    }
+}
+
+boolean P_SeekerMissile(mobj_t * actor, mobj_t ** seekTarget, angle_t thresh, angle_t turnMax, boolean seekcenter)
+{
+    int dir;
+    int dist;
+    angle_t delta;
+    angle_t angle;
+    mobj_t *target;
+
+    target = *seekTarget;
+    if (target == NULL)
+    {
+        return (false);
+    }
+    if (!(target->flags & MF_SHOOTABLE))
+    {                           // Target died
+        *seekTarget = NULL;
+        return (false);
+    }
+    dir = P_FaceMobj(actor, target, &delta);
+    if (delta > thresh)
+    {
+        delta >>= 1;
+        if (delta > turnMax)
+        {
+            delta = turnMax;
+        }
+    }
+    if (dir)
+    {                           // Turn clockwise
+        actor->angle += delta;
+    }
+    else
+    {                           // Turn counter clockwise
+        actor->angle -= delta;
+    }
+    angle = actor->angle >> ANGLETOFINESHIFT;
+    actor->momx = FixedMul(actor->info->speed, finecosine[angle]);
+    actor->momy = FixedMul(actor->info->speed, finesine[angle]);
+    if (actor->z + actor->height < target->z ||
+        target->z + target->height < actor->z || seekcenter)
+    {                           // Need to seek vertically
+        dist = P_AproxDistance(target->x - actor->x, target->y - actor->y);
+        dist = dist / actor->info->speed;
+        if (dist < 1)
+        {
+            dist = 1;
+        }
+        if (hexen)
+          actor->momz = (target->z + (target->height >> 1) - (actor->z + (actor->height >> 1))) / dist;
+        else
+          actor->momz = (target->z + (seekcenter ? target->height/2 : 0) - actor->z) / dist;
+    }
+    return (true);
+}
+

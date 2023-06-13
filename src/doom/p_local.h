@@ -127,6 +127,8 @@ mobj_t*	P_SpawnPlayerMissile (mobj_t* source, mobjtype_t type);
 
 void	P_SpawnPuffSafe (fixed_t x, fixed_t y, fixed_t z, boolean safe);
 
+boolean P_SeekerMissile(mobj_t * actor, mobj_t ** seekTarget, angle_t thresh, angle_t turnMax, boolean seekcenter);
+
 //
 // P_ENEMY
 //
