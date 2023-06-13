@@ -210,6 +210,8 @@ typedef enum
 {
     // Thing causes splash damage even if the target shouldn't
     MF2_FORCERADIUSDMG = 0x00010,
+    // Ripper projectile (does not disappear on impact)
+    MF2_RIP = 0x20000,
 } mobjflag21_t;
 
 // Map Object definition.

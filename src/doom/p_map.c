@@ -374,6 +374,19 @@ boolean PIT_CheckThing (mobj_t* thing)
 	    return !(thing->flags & MF_SOLID);	
 	}
 	
+    if (tmthing->flags21 & MF2_RIP)
+    {
+        damage = ((P_Random() & 3) + 2) * tmthing->info->damage;
+        if (!(thing->flags & MF_NOBLOOD))
+            P_SpawnBlood(tmthing->x, tmthing->y, tmthing->z, damage, thing);
+        // if (tmthing->info->ripsound)
+            // S_StartMobjSound(tmthing, tmthing->info->ripsound);
+
+        P_DamageMobj(thing, tmthing, tmthing->target, damage);
+        numspechit = 0;
+        return (true);
+    }
+
 	// damage / explode
 	damage = ((P_Random()%8)+1)*tmthing->info->damage;
 	P_DamageMobj (thing, tmthing, tmthing->target, damage);
