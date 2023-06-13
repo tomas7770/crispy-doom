@@ -572,6 +572,26 @@ void A_ConsumeAmmo(mobj_t *mobj, player_t *player, pspdef_t *psp)
   }
 }
 
+void A_CheckAmmo(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+  int amount;
+  ammotype_t type;
+
+  if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+  type = weaponinfo[player->readyweapon].ammo;
+  if (!psp->state || type == am_noammo)
+    return;
+
+  if (psp->state->args[1] != 0)
+    amount = psp->state->args[1];
+  else
+    amount = weaponinfo[player->readyweapon].ammopershot;
+
+  if (player->ammo[type] < amount)
+    P_SetPsprite(player, ps_weapon, psp->state->args[0]);
+}
+
 void A_RefireTo(mobj_t *mobj, player_t *player, pspdef_t *psp)
 {
   if (!player) return; // [crispy] let pspr action pointers get called from mobj states
