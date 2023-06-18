@@ -1724,6 +1724,8 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_dmact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_NULL		// raisestate
+	,
+	.flags21 = MF2_NORADIUSDMG
     },
 
     {		// MT_BABY	"ARACHNOTRON"
@@ -1776,6 +1778,8 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_dmact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL,		// flags
 	S_NULL		// raisestate
+	,
+	.flags21 = MF2_NORADIUSDMG
     },
 
     {		// MT_PAIN	"PAIN ELEMENTAL"

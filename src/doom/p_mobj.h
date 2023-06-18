@@ -208,6 +208,8 @@ typedef enum
 // [custom] MBF21 flags
 typedef enum
 {
+    // Doesn't take splash damage (cyberdemon, mastermind)
+    MF2_NORADIUSDMG = 0x00008,
     // Thing causes splash damage even if the target shouldn't
     MF2_FORCERADIUSDMG = 0x00010,
     // Ripper projectile (does not disappear on impact)

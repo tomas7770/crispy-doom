@@ -1454,8 +1454,7 @@ boolean PIT_RadiusAttack (mobj_t* thing)
 
     // Boss spider and cyborg
     // take no damage from concussion.
-    if ((thing->type == MT_CYBORG
-	|| thing->type == MT_SPIDER)
+    if ((thing->flags21 & MF2_NORADIUSDMG)
     && !(bombspot->flags21 & MF2_FORCERADIUSDMG))
 	return true;	
 		
