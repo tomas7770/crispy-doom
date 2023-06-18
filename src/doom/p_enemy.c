@@ -168,22 +168,16 @@ P_NoiseAlert
 //
 // P_CheckMeleeRange
 //
-boolean P_CheckMeleeRange (mobj_t*	actor)
+boolean P_CheckMeleeRangeCustomDist (mobj_t* actor, fixed_t range)
 {
     mobj_t*	pl;
     fixed_t	dist;
-    fixed_t range;
 	
     if (!actor->target)
 	return false;
 		
     pl = actor->target;
     dist = P_AproxDistance (pl->x-actor->x, pl->y-actor->y);
-
-    if (gameversion <= exe_doom_1_2)
-        range = MELEERANGE;
-    else
-        range = MELEERANGE-20*FRACUNIT+pl->info->radius;
 
     if (dist >= range)
         return false;
@@ -203,6 +197,23 @@ boolean P_CheckMeleeRange (mobj_t*	actor)
     }
 
     return true;		
+}
+
+boolean P_CheckMeleeRange (mobj_t*	actor)
+{
+    mobj_t*	pl;
+    fixed_t range;
+
+    if (!actor->target)
+	return false;
+		
+    pl = actor->target;
+
+    if (gameversion <= exe_doom_1_2)
+        range = MELEERANGE;
+    else
+        range = MELEERANGE-20*FRACUNIT+pl->info->radius;
+    return P_CheckMeleeRangeCustomDist(actor, range);
 }
 
 //
