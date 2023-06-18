@@ -649,6 +649,17 @@ void A_WeaponSound(mobj_t *mobj, player_t *player, pspdef_t *psp)
 		S_StartSound(player->so, psp->state->args[0]);
 }
 
+void A_WeaponJump(mobj_t *mobj, player_t *player, pspdef_t *psp)
+{
+  if (!player) return; // [crispy] let pspr action pointers get called from mobj states
+
+  if (!psp->state)
+    return;
+
+  if (P_Random() < psp->state->args[1])
+    P_SetPsprite(player, psp - &player->psprites[0], psp->state->args[0]);
+}
+
 void A_ConsumeAmmo(mobj_t *mobj, player_t *player, pspdef_t *psp)
 {
   int amount;

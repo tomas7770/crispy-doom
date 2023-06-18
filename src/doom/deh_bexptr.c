@@ -130,6 +130,7 @@ extern void A_WeaponProjectile();
 extern void A_WeaponBulletAttack();
 extern void A_WeaponMeleeAttack();
 extern void A_WeaponSound();
+extern void A_WeaponJump();
 extern void A_ConsumeAmmo();
 extern void A_CheckAmmo();
 extern void A_RefireTo();
@@ -245,6 +246,7 @@ static const bex_codeptr_t bex_codeptrtable[] = {
     {"WeaponBulletAttack", {A_WeaponBulletAttack}, {0, 0, 1, 5, 3}},
     {"WeaponMeleeAttack", {A_WeaponMeleeAttack}, {2, 10, FRACUNIT, 0, 0}},
     {"WeaponSound", {A_WeaponSound}},
+    {"WeaponJump", {A_WeaponJump}},
     {"ConsumeAmmo", {A_ConsumeAmmo}},
     {"CheckAmmo", {A_CheckAmmo}},
     {"RefireTo", {A_RefireTo}},
