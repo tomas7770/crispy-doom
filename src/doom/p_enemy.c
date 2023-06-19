@@ -1756,8 +1756,8 @@ void A_BossDeath (mobj_t* mo)
 	!(gamemission == pack_master && (gamemap == 14 || gamemap == 15 || gamemap == 16)))
 	    return;
 		
-	if ((mo->type != MT_FATSO)
-	    && (mo->type != MT_BABY))
+	if ((~mo->flags21 & MF2_MAP07BOSS1)
+	    && (~mo->flags21 & MF2_MAP07BOSS2))
 	    return;
     }
     else
@@ -1800,14 +1800,14 @@ void A_BossDeath (mobj_t* mo)
 	// [crispy] Master Levels in PC slot 7
 	(gamemission == pack_master && (gamemap == 14 || gamemap == 15 || gamemap == 16)))
 	{
-	    if (mo->type == MT_FATSO)
+	    if (mo->flags21 & MF2_MAP07BOSS1)
 	    {
 		junk.tag = 666;
 		EV_DoFloor(&junk,lowerFloorToLowest);
 		return;
 	    }
 	    
-	    if (mo->type == MT_BABY)
+	    if (mo->flags21 & MF2_MAP07BOSS2)
 	    {
 		junk.tag = 667;
 		EV_DoFloor(&junk,raiseToTexture);

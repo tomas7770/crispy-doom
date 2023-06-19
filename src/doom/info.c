@@ -1438,6 +1438,8 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_posact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_FATT_RAISE1		// raisestate
+	,
+	.flags21 = MF2_MAP07BOSS1
     },
 
     {		// MT_FATSHOT
@@ -1754,6 +1756,8 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_bspact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_BSPI_RAISE1		// raisestate
+	,
+	.flags21 = MF2_MAP07BOSS2
     },
 
     {		// MT_CYBORG	"THE CYBERDEMON"
