@@ -1727,7 +1727,7 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_NULL		// raisestate
 	,
-	.flags21 = MF2_NORADIUSDMG
+	.flags21 = MF2_NORADIUSDMG|MF2_E3M8BOSS
     },
 
     {		// MT_BABY	"ARACHNOTRON"
