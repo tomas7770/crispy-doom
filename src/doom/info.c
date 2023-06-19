@@ -1620,6 +1620,8 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_dmact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_BOSS_RAISE1		// raisestate
+	,
+	.flags21 = MF2_E1M8BOSS
     },
 
     {		// MT_BRUISERSHOT

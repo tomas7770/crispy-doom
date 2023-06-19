@@ -1687,7 +1687,7 @@ void A_Explode (mobj_t* thingy)
 // This behavior changed in v1.9, the most notable effect of which
 // was to break uac_dead.wad
 
-static boolean CheckBossEnd(mobjtype_t motype)
+static boolean CheckBossEnd(mobjtype_t motype, int flags21)
 {
     if (gameversion < exe_ultimate)
     {
@@ -1715,7 +1715,7 @@ static boolean CheckBossEnd(mobjtype_t motype)
 	switch(gameepisode)
 	{
             case 1:
-                return gamemap == 8 && motype == MT_BRUISER;
+                return gamemap == 8 && (flags21 & MF2_E1M8BOSS);
 
             case 2:
                 return gamemap == 8 && motype == MT_CYBORG;
@@ -1762,7 +1762,7 @@ void A_BossDeath (mobj_t* mo)
     }
     else
     {
-        if (!CheckBossEnd(mo->type))
+        if (!CheckBossEnd(mo->type, mo->flags21))
         {
             return;
         }

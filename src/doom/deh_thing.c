@@ -76,6 +76,7 @@ static const bex_thingbits_t bex_thingbitstable[] = {
 static const bex_thingbits_t bex_thingbits21table[] = {
     {"NORADIUSDMG", MF2_NORADIUSDMG},
     {"FORCERADIUSDMG", MF2_FORCERADIUSDMG},
+    {"E1M8BOSS", MF2_E1M8BOSS},
     {"RIP", MF2_RIP},
 };
 

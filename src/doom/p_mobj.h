@@ -212,6 +212,8 @@ typedef enum
     MF2_NORADIUSDMG = 0x00008,
     // Thing causes splash damage even if the target shouldn't
     MF2_FORCERADIUSDMG = 0x00010,
+    // E1M8 boss (baron)
+    MF2_E1M8BOSS = 0x01000,
     // Ripper projectile (does not disappear on impact)
     MF2_RIP = 0x20000,
 } mobjflag21_t;
