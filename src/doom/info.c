@@ -1781,7 +1781,7 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL,		// flags
 	S_NULL		// raisestate
 	,
-	.flags21 = MF2_NORADIUSDMG
+	.flags21 = MF2_NORADIUSDMG|MF2_E2M8BOSS
     },
 
     {		// MT_PAIN	"PAIN ELEMENTAL"

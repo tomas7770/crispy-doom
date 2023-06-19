@@ -1718,7 +1718,7 @@ static boolean CheckBossEnd(mobjtype_t motype, int flags21)
                 return gamemap == 8 && (flags21 & MF2_E1M8BOSS);
 
             case 2:
-                return gamemap == 8 && motype == MT_CYBORG;
+                return gamemap == 8 && (flags21 & MF2_E2M8BOSS);
 
             case 3:
                 return gamemap == 8 && motype == MT_SPIDER;
