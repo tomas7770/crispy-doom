@@ -79,6 +79,7 @@ static const bex_thingbits_t bex_thingbits21table[] = {
     {"E1M8BOSS", MF2_E1M8BOSS},
     {"E2M8BOSS", MF2_E2M8BOSS},
     {"E3M8BOSS", MF2_E3M8BOSS},
+    {"E4M6BOSS", MF2_E4M6BOSS},
     {"RIP", MF2_RIP},
 };
 

@@ -218,6 +218,8 @@ typedef enum
     MF2_E2M8BOSS = 0x02000,
     // E3M8 boss (mastermind)
     MF2_E3M8BOSS = 0x04000,
+    // E4M6 boss (cyberdemon)
+    MF2_E4M6BOSS = 0x08000,
     // Ripper projectile (does not disappear on impact)
     MF2_RIP = 0x20000,
 } mobjflag21_t;
