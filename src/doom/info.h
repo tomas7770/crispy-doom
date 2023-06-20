@@ -1247,7 +1247,16 @@ typedef struct
     int misc2;
     int args[8];
     int8_t defined_codeptr_args;
+    // [custom] MBF21 frame flags
+    int flags21;
 } state_t;
+
+// [custom] MBF21 frame flags
+typedef enum
+{
+    // tics halve on nightmare skill
+    STATEF_SKILL5FAST = 0x00000001,
+} frameflag_t;
 
 extern state_t	states[NUMSTATES];
 extern const char *sprnames[];

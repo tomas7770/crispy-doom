@@ -27,6 +27,15 @@
 #include "deh_main.h"
 #include "deh_mapping.h"
 
+typedef struct {
+    const char *flag;
+    int bits;
+} mbf21_framebits_t;
+
+static const mbf21_framebits_t mbf21_framebitstable[] = {
+    {"SKILL5FAST", STATEF_SKILL5FAST},
+};
+
 DEH_BEGIN_MAPPING(state_mapping, state_t)
   DEH_MAPPING("Sprite number",    sprite)
   DEH_MAPPING("Sprite subnumber", frame)
@@ -43,6 +52,7 @@ DEH_BEGIN_MAPPING(state_mapping, state_t)
   DEH_MAPPING("Args6",            args[5])
   DEH_MAPPING("Args7",            args[6])
   DEH_MAPPING("Args8",            args[7])
+  DEH_MAPPING("MBF21 Bits",       flags21)
   DEH_UNSUPPORTED_MAPPING("Codep frame")
 DEH_END_MAPPING
 
@@ -169,6 +179,21 @@ static void DEH_FrameParseLine(deh_context_t *context, char *line, void *tag)
     else if (!strcasecmp(variable_name, "Args8"))
     {
         state->defined_codeptr_args |= (1 << 7);
+    }
+
+    // [custom] support MBF21 bits mnemonics in Frames fields
+    if (!ivalue && !strcasecmp(variable_name, "mbf21 bits"))
+    {
+	for ( ; (value = strtok(value, ",+| \t\f\r")); value = NULL)
+	{
+	    int i;
+	    for (i = 0; i < arrlen(mbf21_framebitstable); i++)
+		if (!strcasecmp(value, mbf21_framebitstable[i].flag))
+		{
+		    ivalue |= mbf21_framebitstable[i].bits;
+		    break;
+		}
+	}
     }
     
     // [crispy] drop the overflow simulation into the frame table
