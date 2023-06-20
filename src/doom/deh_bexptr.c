@@ -119,6 +119,7 @@ extern void A_LineEffect();
 // [custom] MBF21 code pointers
 extern void A_SpawnObject();
 extern void A_MonsterProjectile();
+extern void A_MonsterBulletAttack();
 extern void A_MonsterMeleeAttack();
 extern void A_RadiusDamage();
 extern void A_SeekTracer();
@@ -235,6 +236,7 @@ static const bex_codeptr_t bex_codeptrtable[] = {
     // [custom] MBF21 code pointers
     {"SpawnObject", {A_SpawnObject}},
     {"MonsterProjectile", {A_MonsterProjectile}},
+    {"MonsterBulletAttack", {A_MonsterBulletAttack}, {0, 0, 1, 3, 5}},
     {"MonsterMeleeAttack", {A_MonsterMeleeAttack}, {3, 8, 0, 0}},
     {"RadiusDamage", {A_RadiusDamage}},
     {"SeekTracer", {A_SeekTracer}},

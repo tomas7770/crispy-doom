@@ -407,6 +407,35 @@ void A_MonsterProjectile (mobj_t *actor)
     mo->tracer = actor->target;
 }
 
+void A_MonsterBulletAttack(mobj_t *actor)
+{
+  int hspread, vspread, numbullets, damagebase, damagemod;
+  int aimslope, i, damage, angle, slope;
+
+  if (!actor->target)
+    return;
+
+  hspread    = actor->state->args[0];
+  vspread    = actor->state->args[1];
+  numbullets = actor->state->args[2];
+  damagebase = actor->state->args[3];
+  damagemod  = actor->state->args[4];
+
+  A_FaceTarget(actor);
+  S_StartSound(actor, actor->info->attacksound);
+
+  aimslope = P_AimLineAttack(actor, actor->angle, MISSILERANGE);
+
+  for (i = 0; i < numbullets; i++)
+  {
+    damage = (P_Random() % damagemod + 1) * damagebase;
+    angle = (int)actor->angle + P_RandomHitscanAngle(hspread);
+    slope = aimslope + P_RandomHitscanSlope(vspread);
+
+    P_LineAttack(actor, angle, MISSILERANGE, slope, damage);
+  }
+}
+
 void A_MonsterMeleeAttack(mobj_t *actor)
 {
   int damagebase, damagemod, hitsound, range;
