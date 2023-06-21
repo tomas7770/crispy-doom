@@ -79,6 +79,7 @@ static const bex_thingbits_t bex_thingbits21table[] = {
     {"NORADIUSDMG", MF2_NORADIUSDMG},
     {"FORCERADIUSDMG", MF2_FORCERADIUSDMG},
     {"HIGHERMPROB", MF2_HIGHERMPROB},
+    {"RANGEHALF", MF2_RANGEHALF},
     {"MAP07BOSS1", MF2_MAP07BOSS1},
     {"MAP07BOSS2", MF2_MAP07BOSS2},
     {"E1M8BOSS", MF2_E1M8BOSS},
@@ -178,7 +179,11 @@ static void DEH_InitThingProperties (void)
 		   || i == MT_SPIDER
 		   || i == MT_UNDEAD
 		   || i == MT_SKULL)
+        {
 			mobjinfo[i].missilechancemult = FRACUNIT/2;
+            // [custom] MBF21 flag for this
+            mobjinfo[i].flags21 = MF2_RANGEHALF;
+        }
 		else
 			mobjinfo[i].missilechancemult = FRACUNIT;
         

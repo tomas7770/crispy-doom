@@ -218,6 +218,8 @@ typedef enum
     MF2_FORCERADIUSDMG = 0x00010,
     // Higher missile attack probability (cyberdemon)
     MF2_HIGHERMPROB = 0x00020,
+    // Use half distance for missile attack probability (cyberdemon, mastermind, revenant, lost soul)
+    MF2_RANGEHALF = 0x00040,
     // Tag 666 "boss" on doom 2 map 7 (mancubus)
     MF2_MAP07BOSS1 = 0x00400,
     // Tag 667 "boss" on doom 2 map 7 (arachnotron)

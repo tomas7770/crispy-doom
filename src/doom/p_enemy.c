@@ -271,6 +271,11 @@ boolean P_CheckMissileRange (mobj_t* actor)
     {
 	dist = FixedMul(dist, actor->info->missilechancemult);
     }
+    // [custom] MBF21's version of it
+    else if (actor->flags21 & MF2_RANGEHALF)
+    {
+        dist = FRACUNIT/2;
+    }
     
     // [crispy] generalization of Min Missile Chance values hardcoded in vanilla
     if (dist > actor->info->minmissilechance)
