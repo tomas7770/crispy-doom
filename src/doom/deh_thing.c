@@ -80,6 +80,7 @@ static const bex_thingbits_t bex_thingbits21table[] = {
     {"FORCERADIUSDMG", MF2_FORCERADIUSDMG},
     {"HIGHERMPROB", MF2_HIGHERMPROB},
     {"RANGEHALF", MF2_RANGEHALF},
+    {"LONGMELEE", MF2_LONGMELEE},
     {"MAP07BOSS1", MF2_MAP07BOSS1},
     {"MAP07BOSS2", MF2_MAP07BOSS2},
     {"E1M8BOSS", MF2_E1M8BOSS},
@@ -158,7 +159,11 @@ static void DEH_InitThingProperties (void)
 
 		// [crispy] distance to switch from missile to melee attack (generaliz. for Revenant)
 		if (i == MT_UNDEAD)
+        {
 			mobjinfo[i].meleethreshold = 196;
+            // [custom] MBF21 flag for this
+            mobjinfo[i].flags21 = MF2_LONGMELEE;
+        }
 		else
 			mobjinfo[i].meleethreshold = 0;
 

@@ -265,6 +265,12 @@ boolean P_CheckMissileRange (mobj_t* actor)
 	if (dist < actor->info->meleethreshold)
 	    return false;	// close for fist attack
     }
+    // [custom] MBF21's version of it
+    else if (actor->flags21 & MF2_LONGMELEE)
+    {
+        if (dist < 196)
+            return false;
+    }
 	
     // [crispy] generalize missile chance for Cyb, Spider, Revenant & Lost Soul
     if (actor->info->missilechancemult != FRACUNIT)
