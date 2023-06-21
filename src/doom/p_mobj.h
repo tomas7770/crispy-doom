@@ -208,6 +208,8 @@ typedef enum
 // [custom] MBF21 flags
 typedef enum
 {
+    // Lower gravity (1/8)
+    MF2_LOGRAV = 0x00001,
     // Doesn't take splash damage (cyberdemon, mastermind)
     MF2_NORADIUSDMG = 0x00008,
     // Thing causes splash damage even if the target shouldn't

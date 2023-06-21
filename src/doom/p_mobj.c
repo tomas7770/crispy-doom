@@ -430,6 +430,13 @@ void P_ZMovement (mobj_t* mo)
 	    return;
 	}
     }
+    else if (mo->flags21 & MF2_LOGRAV)
+    {
+        if (mo->momz == 0)
+            mo->momz = -(GRAVITY >> 3)*2;
+        else
+            mo->momz -= GRAVITY >> 3;
+    }
     else if (! (mo->flags & MF_NOGRAVITY) )
     {
 	if (mo->momz == 0)
