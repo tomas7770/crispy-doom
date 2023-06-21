@@ -75,6 +75,7 @@ static const bex_thingbits_t bex_thingbitstable[] = {
 
 static const bex_thingbits_t bex_thingbits21table[] = {
     {"LOGRAV", MF2_LOGRAV},
+    {"SHORTMRANGE", MF2_SHORTMRANGE},
     {"NORADIUSDMG", MF2_NORADIUSDMG},
     {"FORCERADIUSDMG", MF2_FORCERADIUSDMG},
     {"MAP07BOSS1", MF2_MAP07BOSS1},
@@ -195,6 +196,10 @@ static void DEH_InitThingProperties (void)
         // [custom] splash immunity, E3M8 boss, E4M8 boss (generaliz. for Spider Mastermind)
         else if (i == MT_SPIDER)
             mobjinfo[i].flags21 = MF2_NORADIUSDMG|MF2_E3M8BOSS|MF2_E4M8BOSS;
+        // [custom] short missile range (generaliz. for Arch Vile)
+        // the maxattackrange above is the one used, this flag is here for compat reasons with MBF21 patches
+        else if (i == MT_VILE)
+            mobjinfo[i].flags21 = MF2_SHORTMRANGE;
 	}
 }
 

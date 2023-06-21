@@ -252,6 +252,12 @@ boolean P_CheckMissileRange (mobj_t* actor)
 	if (dist > actor->info->maxattackrange)
 	    return false;	// too far away
     }
+    // [custom] MBF21's version of it
+    else if (actor->flags21 & MF2_SHORTMRANGE)
+    {
+        if (dist > 14*64)
+            return false;
+    }
 	
     // [crispy] generalization of the Revenant's different melee threshold
     if (actor->info->meleethreshold > 0)

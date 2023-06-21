@@ -210,6 +210,8 @@ typedef enum
 {
     // Lower gravity (1/8)
     MF2_LOGRAV = 0x00001,
+    // Short missile range (archvile)
+    MF2_SHORTMRANGE = 0x00002,
     // Doesn't take splash damage (cyberdemon, mastermind)
     MF2_NORADIUSDMG = 0x00008,
     // Thing causes splash damage even if the target shouldn't
