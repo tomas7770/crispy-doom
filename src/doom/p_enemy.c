@@ -275,6 +275,11 @@ boolean P_CheckMissileRange (mobj_t* actor)
     // [crispy] generalization of Min Missile Chance values hardcoded in vanilla
     if (dist > actor->info->minmissilechance)
       dist = actor->info->minmissilechance;
+    // [custom] MBF21's version of it
+    else if (actor->flags21 & MF2_HIGHERMPROB && dist > 160)
+    {
+        dist = 160;
+    }
 		
     if (P_Random () < dist)
 	return false;

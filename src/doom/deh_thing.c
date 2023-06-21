@@ -78,6 +78,7 @@ static const bex_thingbits_t bex_thingbits21table[] = {
     {"SHORTMRANGE", MF2_SHORTMRANGE},
     {"NORADIUSDMG", MF2_NORADIUSDMG},
     {"FORCERADIUSDMG", MF2_FORCERADIUSDMG},
+    {"HIGHERMPROB", MF2_HIGHERMPROB},
     {"MAP07BOSS1", MF2_MAP07BOSS1},
     {"MAP07BOSS2", MF2_MAP07BOSS2},
     {"E1M8BOSS", MF2_E1M8BOSS},
@@ -190,9 +191,9 @@ static void DEH_InitThingProperties (void)
         // [custom] E1M8 boss (generaliz. for Baron)
         else if (i == MT_BRUISER)
             mobjinfo[i].flags21 = MF2_E1M8BOSS;
-        // [custom] splash immunity, E2M8 boss, E4M6 boss (generaliz. for Cyberdemon)
+        // [custom] splash immunity, E2M8 boss, E4M6 boss, high missile chance (generaliz. for Cyberdemon)
         else if (i == MT_CYBORG)
-            mobjinfo[i].flags21 = MF2_NORADIUSDMG|MF2_E2M8BOSS|MF2_E4M6BOSS;
+            mobjinfo[i].flags21 = MF2_NORADIUSDMG|MF2_E2M8BOSS|MF2_E4M6BOSS|MF2_HIGHERMPROB;
         // [custom] splash immunity, E3M8 boss, E4M8 boss (generaliz. for Spider Mastermind)
         else if (i == MT_SPIDER)
             mobjinfo[i].flags21 = MF2_NORADIUSDMG|MF2_E3M8BOSS|MF2_E4M8BOSS;

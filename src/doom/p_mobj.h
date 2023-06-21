@@ -216,6 +216,8 @@ typedef enum
     MF2_NORADIUSDMG = 0x00008,
     // Thing causes splash damage even if the target shouldn't
     MF2_FORCERADIUSDMG = 0x00010,
+    // Higher missile attack probability (cyberdemon)
+    MF2_HIGHERMPROB = 0x00020,
     // Tag 666 "boss" on doom 2 map 7 (mancubus)
     MF2_MAP07BOSS1 = 0x00400,
     // Tag 667 "boss" on doom 2 map 7 (arachnotron)
