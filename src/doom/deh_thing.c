@@ -126,6 +126,7 @@ DEH_BEGIN_MAPPING(thing_mapping, mobjinfo_t)
 DEH_END_MAPPING
 
 // [crispy] initialize Thing extra properties (keeping vanilla props in info.c)
+// [custom] same for MBF21 flags
 static void DEH_InitThingProperties (void)
 {
 	int i;
@@ -178,6 +179,22 @@ static void DEH_InitThingProperties (void)
 			mobjinfo[i].missilechancemult = FRACUNIT/2;
 		else
 			mobjinfo[i].missilechancemult = FRACUNIT;
+        
+        // [custom] MAP07 boss, tag 666 (generaliz. for Mancubus)
+        if (i == MT_FATSO)
+            mobjinfo[i].flags21 = MF2_MAP07BOSS1;
+        // [custom] MAP07 boss, tag 667 (generaliz. for Arachnotron)
+        else if (i == MT_BABY)
+            mobjinfo[i].flags21 = MF2_MAP07BOSS2;
+        // [custom] E1M8 boss (generaliz. for Baron)
+        else if (i == MT_BRUISER)
+            mobjinfo[i].flags21 = MF2_E1M8BOSS;
+        // [custom] splash immunity, E2M8 boss, E4M6 boss (generaliz. for Cyberdemon)
+        else if (i == MT_CYBORG)
+            mobjinfo[i].flags21 = MF2_NORADIUSDMG|MF2_E2M8BOSS|MF2_E4M6BOSS;
+        // [custom] splash immunity, E3M8 boss, E4M8 boss (generaliz. for Spider Mastermind)
+        else if (i == MT_SPIDER)
+            mobjinfo[i].flags21 = MF2_NORADIUSDMG|MF2_E3M8BOSS|MF2_E4M8BOSS;
 	}
 }
 

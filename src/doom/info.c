@@ -1438,8 +1438,6 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_posact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_FATT_RAISE1		// raisestate
-	,
-	.flags21 = MF2_MAP07BOSS1
     },
 
     {		// MT_FATSHOT
@@ -1622,8 +1620,6 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_dmact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_BOSS_RAISE1		// raisestate
-	,
-	.flags21 = MF2_E1M8BOSS
     },
 
     {		// MT_BRUISERSHOT
@@ -1728,8 +1724,6 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_dmact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_NULL		// raisestate
-	,
-	.flags21 = MF2_NORADIUSDMG|MF2_E3M8BOSS|MF2_E4M8BOSS
     },
 
     {		// MT_BABY	"ARACHNOTRON"
@@ -1756,8 +1750,6 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_bspact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL|MF_FLIPPABLE,		// flags
 	S_BSPI_RAISE1		// raisestate
-	,
-	.flags21 = MF2_MAP07BOSS2
     },
 
     {		// MT_CYBORG	"THE CYBERDEMON"
@@ -1784,8 +1776,6 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
 	sfx_dmact,		// activesound
 	MF_SOLID|MF_SHOOTABLE|MF_COUNTKILL,		// flags
 	S_NULL		// raisestate
-	,
-	.flags21 = MF2_NORADIUSDMG|MF2_E2M8BOSS|MF2_E4M6BOSS
     },
 
     {		// MT_PAIN	"PAIN ELEMENTAL"
