@@ -450,7 +450,7 @@ void A_MonsterMeleeAttack(mobj_t *actor)
   range      = actor->state->args[3];
 
   if (range == 0)
-    range = MELEERANGE;//actor->info->meleerange;
+    range = actor->info->meleerange;
 
   range += actor->target->info->radius - 20 * FRACUNIT;
 
@@ -635,7 +635,7 @@ void A_WeaponMeleeAttack(mobj_t *mobj, player_t *player, pspdef_t *psp)
   range      = psp->state->args[4];
 
   if (range == 0)
-    range = MELEERANGE;
+    range = player->mo->info->meleerange;
 
   damage = (P_Random() % damagemod + 1) * damagebase;
   if (player->powers[pw_strength])

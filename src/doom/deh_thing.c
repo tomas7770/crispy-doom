@@ -26,6 +26,7 @@
 
 #include "info.h"
 #include "p_mobj.h" // [crispy] MF_*
+#include "p_local.h" // [custom] MELEERANGE
 
 typedef struct {
     const char *flag;
@@ -127,6 +128,8 @@ DEH_BEGIN_MAPPING(thing_mapping, mobjinfo_t)
   DEH_MAPPING("Missile chance multiplier",  missilechancemult)
   // [custom] MBF21 flags
   DEH_MAPPING("MBF21 Bits",          flags21)
+  // [custom] MBF21 melee range
+  DEH_MAPPING("Melee range",         meleerange)
 DEH_END_MAPPING
 
 // [crispy] initialize Thing extra properties (keeping vanilla props in info.c)
@@ -211,6 +214,9 @@ static void DEH_InitThingProperties (void)
         // the maxattackrange above is the one used, this flag is here for compat reasons with MBF21 patches
         else if (i == MT_VILE)
             mobjinfo[i].flags21 = MF2_SHORTMRANGE;
+        
+        // [custom] MBF21 melee range
+        mobjinfo[i].meleerange = MELEERANGE;
 	}
 }
 

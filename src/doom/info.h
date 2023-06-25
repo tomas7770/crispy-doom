@@ -1474,6 +1474,8 @@ typedef struct
     int missilechancemult;
     // [custom] MBF21 flags
     int flags21;
+    // [custom] MBF21 melee range
+    int meleerange;
 
 } mobjinfo_t;
 

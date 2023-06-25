@@ -210,9 +210,9 @@ boolean P_CheckMeleeRange (mobj_t*	actor)
     pl = actor->target;
 
     if (gameversion <= exe_doom_1_2)
-        range = MELEERANGE;
+        range = actor->info->meleerange;
     else
-        range = MELEERANGE-20*FRACUNIT+pl->info->radius;
+        range = actor->info->meleerange-20*FRACUNIT+pl->info->radius;
     return P_CheckMeleeRangeCustomDist(actor, range);
 }
 
@@ -584,7 +584,7 @@ P_LookForPlayers
 		dist = P_AproxDistance (player->mo->x - actor->x,
 					player->mo->y - actor->y);
 		// if real close, react anyway
-		if (dist > MELEERANGE)
+		if (dist > WAKEUPRANGE)
 		    continue;	// behind back
 	    }
 	}
@@ -1000,7 +1000,7 @@ void A_SargAttack (mobj_t* actor)
     damage = ((P_Random()%10)+1)*4;
 
     if (gameversion <= exe_doom_1_2)
-        P_LineAttack(actor, actor->angle, MELEERANGE, 0, damage);
+        P_LineAttack(actor, actor->angle, actor->info->meleerange, 0, damage);
     else
         P_DamageMobj (actor->target, actor, actor, damage);
 }

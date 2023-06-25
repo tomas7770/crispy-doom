@@ -56,6 +56,9 @@
 #define MELEERANGE		(64*FRACUNIT)
 #define MISSILERANGE	(32*64*FRACUNIT)
 
+// [custom] a couple of explicit constants for non-melee things that used to use MELEERANGE
+#define WAKEUPRANGE     (64*FRACUNIT)
+
 // follow a player exlusively for 3 seconds
 #define	BASETHRESHOLD	 	100
 
