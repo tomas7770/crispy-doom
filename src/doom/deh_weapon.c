@@ -27,6 +27,15 @@
 #include "deh_main.h"
 #include "deh_mapping.h"
 
+typedef struct {
+    const char *flag;
+    int bits;
+} mbf21_weaponbits_t;
+
+static const mbf21_weaponbits_t mbf21_weaponbitstable[] = {
+
+};
+
 DEH_BEGIN_MAPPING(weapon_mapping, weaponinfo_t)
   DEH_MAPPING("Ammo type",        ammo)
   DEH_MAPPING("Deselect frame",   upstate)
@@ -35,6 +44,7 @@ DEH_BEGIN_MAPPING(weapon_mapping, weaponinfo_t)
   DEH_MAPPING("Shooting frame",   atkstate)
   DEH_MAPPING("Firing frame",     flashstate)
   DEH_MAPPING("Ammo per shot",    ammopershot)
+  DEH_MAPPING("MBF21 Bits",       flags21)
 DEH_END_MAPPING
 
 static void *DEH_WeaponStart(deh_context_t *context, char *line)
@@ -76,6 +86,21 @@ static void DEH_WeaponParseLine(deh_context_t *context, char *line, void *tag)
     }
 
     ivalue = atoi(value);
+
+    // [custom] support MBF21 bits mnemonics in Weapons fields
+    if (!ivalue && !strcasecmp(variable_name, "mbf21 bits"))
+    {
+	for ( ; (value = strtok(value, ",+| \t\f\r")); value = NULL)
+	{
+	    int i;
+	    for (i = 0; i < arrlen(mbf21_weaponbitstable); i++)
+		if (!strcasecmp(value, mbf21_weaponbitstable[i].flag))
+		{
+		    ivalue |= mbf21_weaponbitstable[i].bits;
+		    break;
+		}
+	}
+    }
 
     DEH_SetMapping(context, &weapon_mapping, weapon, variable_name, ivalue);
 }

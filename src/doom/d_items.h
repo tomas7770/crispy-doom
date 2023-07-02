@@ -34,9 +34,17 @@ typedef struct
     int		atkstate;
     int		flashstate;
     int     ammopershot;
+    int     flags21;
 
 } weaponinfo_t;
 
 extern  weaponinfo_t    weaponinfo[NUMWEAPONS];
+
+// [custom] MBF21 weapon flags
+typedef enum
+{
+    // Weapon won't autofire when swapped to
+    NOAUTOFIRE = 0x004,
+} weaponflag_t;
 
 #endif
