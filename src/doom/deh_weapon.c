@@ -33,7 +33,7 @@ typedef struct {
 } mbf21_weaponbits_t;
 
 static const mbf21_weaponbits_t mbf21_weaponbitstable[] = {
-
+    {"NOAUTOFIRE", WPF_NOAUTOFIRE},
 };
 
 DEH_BEGIN_MAPPING(weapon_mapping, weaponinfo_t)

@@ -351,11 +351,11 @@ A_WeaponReady
     
     // check for fire
     //  the missile launcher and bfg do not auto fire
+    // [custom] MBF21 NOAUTOFIRE flag generalizes this
     if (player->cmd.buttons & BT_ATTACK)
     {
 	if ( !player->attackdown
-	     || (player->readyweapon != wp_missile
-		 && player->readyweapon != wp_bfg) )
+	     || !(weaponinfo[player->readyweapon].flags21 & WPF_NOAUTOFIRE) )
 	{
 	    player->attackdown = true;
 	    P_FireWeapon (player);		

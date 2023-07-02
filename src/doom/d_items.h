@@ -44,7 +44,7 @@ extern  weaponinfo_t    weaponinfo[NUMWEAPONS];
 typedef enum
 {
     // Weapon won't autofire when swapped to
-    NOAUTOFIRE = 0x004,
+    WPF_NOAUTOFIRE = 0x004,
 } weaponflag_t;
 
 #endif

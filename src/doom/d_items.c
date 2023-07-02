@@ -85,6 +85,7 @@ weaponinfo_t	weaponinfo[NUMWEAPONS] =
 	S_MISSILE1,
 	S_MISSILEFLASH1,
 	1,
+	WPF_NOAUTOFIRE,
     },
     {
 	// plasma rifle
@@ -105,6 +106,7 @@ weaponinfo_t	weaponinfo[NUMWEAPONS] =
 	S_BFG1,
 	S_BFGFLASH1,
 	40,
+	WPF_NOAUTOFIRE,
     },
     {
 	// chainsaw
