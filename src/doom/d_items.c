@@ -117,6 +117,7 @@ weaponinfo_t	weaponinfo[NUMWEAPONS] =
 	S_SAW1,
 	S_NULL,
 	1,
+	WPF_NOTHRUST,
     },
     {
 	// super shotgun

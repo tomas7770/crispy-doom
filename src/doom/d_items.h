@@ -43,6 +43,8 @@ extern  weaponinfo_t    weaponinfo[NUMWEAPONS];
 // [custom] MBF21 weapon flags
 typedef enum
 {
+    // Doesn't thrust things
+    WPF_NOTHRUST = 0x001,
     // Weapon is silent
     WPF_SILENT = 0x002,
     // Weapon won't autofire when swapped to

@@ -880,7 +880,7 @@ P_DamageMobj
 	&& !(target->flags & MF_NOCLIP)
 	&& (!source
 	    || !source->player
-	    || source->player->readyweapon != wp_chainsaw))
+	    || !(weaponinfo[source->player->readyweapon].flags21 & WPF_NOTHRUST)))
     {
 	ang = R_PointToAngle2 ( inflictor->x,
 				inflictor->y,
