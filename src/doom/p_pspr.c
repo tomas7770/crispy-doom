@@ -290,6 +290,8 @@ void P_FireWeapon (player_t* player)
     P_SetMobjState (player->mo, S_PLAY_ATK1);
     newstate = weaponinfo[player->readyweapon].atkstate;
     P_SetPsprite (player, ps_weapon, newstate);
+    // [custom] MBF21 SILENT flag
+    if (!(weaponinfo[player->readyweapon].flags21 & WPF_SILENT))
     P_NoiseAlert (player->mo, player->mo);
 }
 

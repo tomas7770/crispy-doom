@@ -33,6 +33,7 @@ typedef struct {
 } mbf21_weaponbits_t;
 
 static const mbf21_weaponbits_t mbf21_weaponbitstable[] = {
+    {"SILENT", WPF_SILENT},
     {"NOAUTOFIRE", WPF_NOAUTOFIRE},
 };
 
